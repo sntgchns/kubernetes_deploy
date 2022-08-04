@@ -1,0 +1,45 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: flask-kubernetes-service
+spec:
+  selector:
+    app: flask-kubernetes-app
+  ports:
+  - protocol: 'TCP'
+    port: 6000
+    targetPort: 5000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-kubernetes-app
+spec:
+  selector:
+    matchLabels:
+      app: flask-kubernetes-app
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: flask-kubernetes-app
+    spec:
+      containers:
+      - name: flask-kubernetes-app
+        image: flask-kubernetes
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+        ports:
+        - containerPort: 5000
+
+# kubectl apply -f deployment.yaml
+# minikube dashboard
+# minikube service flask-kubernetes-service

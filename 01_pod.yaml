@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: flask-kubernetes-app
+spec:
+  containers:
+  - name: hello
+  image: grc.io/google-samples/hello-app:1.0
+  ports:
+  - containerPort: 8080

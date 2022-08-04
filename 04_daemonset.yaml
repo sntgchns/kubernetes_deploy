@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: DaemonSet # Daemonset is a type of Deployment that runs 1 pods on all nodes. Doesnt have replicas (monitoring nodes)
+metadata:
+  name: flask-kubernetes-app
+spec:
+  selector:
+    matchLabels:
+      app: flask-kubernetes-app
+  template:
+    metadata:
+      labels:
+        app: flask-kubernetes-app
+    spec:
+      containers:
+      - name: flask-kubernetes-app
+        image: flask-kubernetes
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+        ports:
+        - containerPort: 5000
