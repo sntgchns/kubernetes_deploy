@@ -1,12 +1,12 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: StatefulSet # StatefulSet is a kubernetes resource that allows you to create a set of pods with a volume attached to them. The data persist across restarts of the pods.
 metadata:
   name: mystatefulset
 spec:
   selector:
     matchLabels:
       app: myapp
-  serviceName: <ServiceName>
+  serviceName: "frontend"
   replicas: 1
   template:
     metadata:
@@ -21,13 +21,13 @@ spec:
           name: web
         volumeMounts:
         - name: www
-          mountPath: /usr/share/nginx/html
+          mountPath: "/usr/share/nginx/html"
   volumeClaimTemplates:
   - metadata:
       name: www
     spec:
       accessModes:
-      - ReadWriteOnce"
+      - ReadWriteOnce
       resources:
         requests:
           storage: 1Gi

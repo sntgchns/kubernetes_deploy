@@ -1,10 +1,15 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: flask-kubernetes-app
+  name: nginx
 spec:
   containers:
-  - name: hello
-  image: grc.io/google-samples/hello-app:1.0
-  ports:
-  - containerPort: 8080
+  - name: nginx
+    image: nginx:latest
+
+# kubectl apply -f 01_pod.yaml
+# kubectl get pods
+# kubectl exec -it nginx -- sh
+# kubectl logs nginx
+# kubectl delete pod nginx
+# kubectl get pods nginx -o yaml
