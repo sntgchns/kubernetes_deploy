@@ -41,6 +41,8 @@ spec:
               key: mongo-password
       volumes:
       - name: mongo-vol
+        # persistentVolumeClaim:
+        #   claimName: mongo-pvc # from pvc.yaml
         hostPath:
           path: /home/docker/mongodb_data
           type: Directory
