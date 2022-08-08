@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo:5.0
+        resources:
+          limits:
+            memory: "256Mi"
+            cpu: "1000m"
+        volumeMounts:
+        - mountPath: /data/db
+          name: mongo-vol
+        ports:
+        - containerPort: 27017
+        env: # from mongo-secret.yaml
+        - name: MONGO_INITDB_ROOT_USERNAME
+          # value: <user>
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-user
+        - name: MONGO_INITDB_ROOT_PASSWORD
+          # value: <user>
+          valueFrom:
+            secretKeyRef:
+              name: mongo-secret
+              key: mongo-password
+      volumes:
+      - name: mongo-vol
+        hostPath:
+          path: /home/docker/mongodb_data
+          type: Directory
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service # mongo-service.yaml
+spec:
+  selector:
+    app: mongo
+  ports:
+  - protocol: TCP
+    port: 27017 # Port to access service, can be eg: 8080 
+    targetPort: 27017 # deployment pod containerPort
+

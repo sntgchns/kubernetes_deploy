@@ -1,0 +1,23 @@
+minikube start
+minikube status
+minikube get node
+
+kubectl get pod
+kubectl apply -f mongo-config.yaml
+kubectl apply -f mongo-secret.yaml
+kubectl apply -f mongo.yaml
+kubectl apply -f webapp.yaml
+
+kubectl get all
+kubectl get configmap
+kubectl get secret
+kubectl describe pod <podName>
+kubectl describe service <serviceName>
+kubectl logs <podName>
+kubectl logs <podName> -f
+
+minikube ip
+kubectl get node
+kubectl get node -o wide
+kubectl get svc -o wide
+kubectl get pod -o wide
